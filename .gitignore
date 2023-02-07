@@ -1,0 +1,28 @@
+# Ignore the cache files
+__pycache__
+*.pyc
+.code
+.cache
+*.DS_Store
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# DB files
+*.sqlite
+
+# Ignore db migrations
+migrations
+
+# vscode files
+.vscode
+
+# Ignore documents files except readme
+src/documents
+!src/documents/readme.md
