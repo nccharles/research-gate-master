@@ -4,11 +4,11 @@ Contains functionality for storing and retrieving records from the database.
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.storage.database_records import User, Document
-from src.storage.database_provider import db_provider
+from storage.database_records import User, Document
+from storage.database_provider import db_provider
 from werkzeug.security import check_password_hash
 from sqlalchemy_utils import database_exists, create_database
-from src.shared.enum_types import DocumentType, Colleges, Schools, Faculties
+from shared.enum_types import DocumentType, Colleges, Schools, Faculties
 from flask import Flask
 
 db = db_provider.db
@@ -22,6 +22,7 @@ class DatabaseCreator:
         """
         if not database_exists(flask_app.config['SQLALCHEMY_DATABASE_URI']):
             create_database(flask_app.config['SQLALCHEMY_DATABASE_URI'])
+        print(flask_app.config['SQLALCHEMY_DATABASE_URI'])
 
 
 class DatabaseStorageClient:

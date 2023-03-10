@@ -4,9 +4,9 @@ Contains database model instances used project wide.
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.storage.database_provider import db_provider
-from src.storage.database_constants import DatabaseConstants
-from src.shared.enum_types import DocumentType, Colleges, Schools, Faculties
+from storage.database_provider import db_provider
+from storage.database_constants import DatabaseConstants
+from shared.enum_types import DocumentType, Colleges, Schools, Faculties
 import datetime
 import uuid
 from flask_sqlalchemy import SQLAlchemy

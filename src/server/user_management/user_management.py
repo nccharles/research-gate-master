@@ -5,11 +5,11 @@ Contains user management endpoints and corresponding methods.
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.storage.database_client import UserClient
-from src.storage.database_records import User
-from src.storage.database_constants import DatabaseConstants
-from src.shared.server_routes import ServerRoutes
-from src.shared.server_utils import ServerUtils
+from storage.database_client import UserClient
+from storage.database_records import User
+from storage.database_constants import DatabaseConstants
+from shared.server_routes import ServerRoutes
+from shared.server_utils import ServerUtils
 from werkzeug.security import generate_password_hash
 from flask_api import status
 from flask import request, jsonify, session, Flask

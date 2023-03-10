@@ -5,12 +5,12 @@ Contains document management endpoints and corresponding methods.
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.storage.database_client import DocumentClient, UserClient
-from src.storage.database_records import Document, User
-from src.shared.server_routes import ServerRoutes
-from src.shared.server_utils import ServerUtils
-from src.shared.md5_hash import MD5Hash
-from src.shared.enum_types import DocumentType, Colleges, Schools, Faculties
+from storage.database_client import DocumentClient, UserClient
+from storage.database_records import Document, User
+from shared.server_routes import ServerRoutes
+from shared.server_utils import ServerUtils
+from shared.md5_hash import MD5Hash
+from shared.enum_types import DocumentType, Colleges, Schools, Faculties
 from flask_api import status
 from flask import Flask, request, session, jsonify
 from typing import Dict, List

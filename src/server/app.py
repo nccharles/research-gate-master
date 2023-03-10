@@ -6,8 +6,8 @@ __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from flask import Flask
 from flask_migrate import Migrate
-from src.base_constants import BaseDirectoryConstants
-from src.storage.database_provider import db_provider
+from base_constants import BaseDirectoryConstants
+from storage.database_provider import db_provider
 import os
 
 

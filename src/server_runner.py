@@ -1,7 +1,7 @@
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.server.research_gate_server import ResearchGateServer
+from server.research_gate_server import ResearchGateServer
 import sys
 
 if __name__ == "__main__":

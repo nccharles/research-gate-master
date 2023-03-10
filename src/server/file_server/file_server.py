@@ -5,8 +5,8 @@ Contains file management endpoints and corresponding methods.
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.base_constants import BaseDirectoryConstants
-from src.shared.server_routes import ServerRoutes
+from base_constants import BaseDirectoryConstants
+from shared.server_routes import ServerRoutes
 from flask import Flask, send_from_directory
 
 

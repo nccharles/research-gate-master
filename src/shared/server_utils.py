@@ -5,8 +5,8 @@ Methods to be used frequently in the server.
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.storage.database_client import DocumentClient
-from src.base_constants import BaseDirectoryConstants
+from storage.database_client import DocumentClient
+from base_constants import BaseDirectoryConstants
 from flask import jsonify, session
 from flask_api import status
 from werkzeug.datastructures import FileStorage

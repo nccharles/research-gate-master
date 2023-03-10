@@ -1,6 +1,7 @@
 # Ignore the cache files
 __pycache__
 *.pyc
+*.ini
 .code
 .cache
 *.DS_Store

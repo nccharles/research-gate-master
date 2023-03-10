@@ -1,12 +1,12 @@
 __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
-from src.server.app import create_app
-from src.server.user_management.user_management import UserManagement
-from src.server.document_management.document_management import DocumentManagement
-from src.server.file_server.file_server import FileServer
-from src.storage.database_client import DatabaseCreator
-from src.storage.database_migrations_manager import MigrationManager
+from server.app import create_app
+from server.user_management.user_management import UserManagement
+from server.document_management.document_management import DocumentManagement
+from server.file_server.file_server import FileServer
+from storage.database_client import DatabaseCreator
+from storage.database_migrations_manager import MigrationManager
 from flask import Flask
 import os
 import subprocess
@@ -18,17 +18,19 @@ class ResearchGateServer:
         self.port: int = port
         self.intiate_servers()
 
-        if not os.path.exists("migrations"):
-            raise PermissionError("Migrations directory must be mounted.")
+        # if not os.path.exists("migrations"):
+        #     subprocess.call("alembic init migrations", shell=True)
+        #     # raise PermissionError("Migrations directory must be mounted.")
 
-        if not os.listdir('migrations'):
-            # Set FLASK_APP environment variable.
-            os.environ['FLASK_APP'] = os.path.abspath(__file__)
-            # Initialize migrations.
-            subprocess.call("flask db init", shell=True)
+        # if not os.listdir('migrations'):
+        #     # Set FLASK_APP environment variable.
+        #     os.environ['FLASK_APP'] = os.path.abspath(__file__)
+        #     # Initialize migrations.
+        #     print("Initializing migrations...")
+        #     subprocess.call("flask db init", shell=True)
 
-        DatabaseCreator.create_diagnostics_database_if_not_exists(flask_app=self.flask_app)
-        MigrationManager.upgrade_database(app=self.flask_app)
+        # DatabaseCreator.create_diagnostics_database_if_not_exists(flask_app=self.flask_app)
+        # MigrationManager.upgrade_database(app=self.flask_app)
 
     def intiate_servers(self):
         UserManagement(flask_app=self.flask_app)
