@@ -96,7 +96,7 @@ class DocumentClient:
     @staticmethod
     def document_hash_exists(document_hash: str = None):
         return db.session.query(Document).filter(Document.document_hash == document_hash).scalar() is not None
-
+      
     @staticmethod
     def document_base_name_is_taken(file_name: str = None):
         matching_entry: bool = db.session.query(Document).filter(
@@ -153,7 +153,9 @@ class DocumentClient:
     def retrieve_documents_by_document_type(document_type: DocumentType = None):
         return db.session.query(Document).filter(
             Document.document_type == document_type).all()
-
+    @staticmethod
+    def retrieve_document_by_hash(document_hash: str = None):
+        return db.session.query(Document).filter(Document.document_hash == document_hash).one_or_none()
     @staticmethod
     def retrieve_documents_by_uploader_id():
         pass

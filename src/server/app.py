@@ -5,6 +5,7 @@ __author__ = "Sylivie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from base_constants import BaseDirectoryConstants
 from storage.database_provider import db_provider
@@ -14,9 +15,8 @@ import os
 def create_app():
     # TODO: Configure templates directories and static folder directories.
     app = Flask(__name__, template_folder=None, static_folder=None)
-
-    # TODO: Implement an algorithm to generate app secret key
-    app.secret_key = "Inyange"
+    CORS(app, resources={r"/*": {"origins": "http://localhost:4200", "supports_credentials": True}})
+    app.config['SECRET_KEY'] = "dhj3_&^%$#jdksj"
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + \
         os.path.join(BaseDirectoryConstants.DB_STORAGE_PATH, 'local_db.sqlite')
 

@@ -15,3 +15,4 @@ class BaseDirectoryConstants:
     DB_STORAGE_PATH = os.path.join(STORAGE_DIRECTORY_PATH, 'db')
 
     DOCUMENTS_DIRECTORY_PATH = os.path.join(BASE_DIRECTORY_PATH, 'documents')
+    DOCUMENTS_TEMP_PATH = os.path.join(BASE_DIRECTORY_PATH, 'documents', 'temp')

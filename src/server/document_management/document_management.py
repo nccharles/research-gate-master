@@ -87,32 +87,45 @@ class DocumentManagement:
             return ServerUtils.http_response(
                 response_message='Missing required arguments.',
                 response_status_code=status.HTTP_400_BAD_REQUEST)
+        # TODO: to be removed after testing.
+        return ServerUtils.http_response(
+            response_message='Document Uploaded Successfully.',
+            response_status_code=status.HTTP_200_OK)
+        # TODO: uncomment after testing.
+        # if not ServerUtils.check_enum_has_key(DocumentType, document_type):
+        #     return ServerUtils.http_response(
+        #         response_message="Invalid document type name: {0}.".format(document_type),
+        #         response_status_code=status.HTTP_400_BAD_REQUEST)
 
-        if not ServerUtils.check_enum_has_key(DocumentType, document_type):
-            return ServerUtils.http_response(
-                response_message="Invalid document type name: {0}.".format(document_type),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
+        # if not ServerUtils.check_enum_has_key(Colleges, document_college):
+        #     return ServerUtils.http_response(
+        #         response_message="Invalid college name: {0}.".format(document_college),
+        #         response_status_code=status.HTTP_400_BAD_REQUEST)
 
-        if not ServerUtils.check_enum_has_key(Colleges, document_college):
-            return ServerUtils.http_response(
-                response_message="Invalid college name: {0}.".format(document_college),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
+        # if not ServerUtils.check_enum_has_key(Schools, document_school):
+        #     return ServerUtils.http_response(
+        #         response_message="Invalid school name: {0}.".format(document_school),
+        #         response_status_code=status.HTTP_400_BAD_REQUEST)
 
-        if not ServerUtils.check_enum_has_key(Schools, document_school):
-            return ServerUtils.http_response(
-                response_message="Invalid school name: {0}.".format(document_school),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
-
-        if not ServerUtils.check_enum_has_key(Faculties, document_faculty):
-            return ServerUtils.http_response(
-                response_message="Invalid faculty name: {0}.".format(document_faculty),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
-
+        # if not ServerUtils.check_enum_has_key(Faculties, document_faculty):
+        #     return ServerUtils.http_response(
+        #         response_message="Invalid faculty name: {0}.".format(document_faculty),
+        #         response_status_code=status.HTTP_400_BAD_REQUEST)
+        # ###############################################################################################
         # check document hash.
-        document_hash: str = MD5Hash.compute_hash(file=document_file)
-        if DocumentClient.document_hash_exists(document_hash=document_hash):
+        # document_hash: str = MD5Hash.compute_hash(file=document_file)
+        # if DocumentClient.document_hash_exists(document_hash=document_hash):
+        #     return ServerUtils.http_response(
+        #         response_message="Document Already Exists in the system.",
+        #         response_status_code=status.HTTP_400_BAD_REQUEST)
+
+        # get document base name.
+        all_documents: List[Document] = DocumentClient.retrieve_all_documents()
+        # compare document file and document base name.
+        parcentage: float =MD5Hash.compare_hash(file=document_file, all_documents=all_documents)
+        if parcentage >= 60:
             return ServerUtils.http_response(
-                response_message="This file already exists in the system, Add a new one.",
+                response_message="Document has similar content {0}%, of document Already Exists in the system.".format(parcentage),
                 response_status_code=status.HTTP_400_BAD_REQUEST)
 
         # Store the file in the file system.

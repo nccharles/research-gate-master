@@ -69,14 +69,13 @@ class UserManagement:
         new_user_record: User = UserClient.create_and_store_new_user_record(
             user_first_name=user_first_name, user_middle_name=user_middle_name, user_last_name=user_last_name,
             user_email=user_email, user_password_hash=user_password_hash, user_phone_number=user_phone_number)
-
+        session['user_id'] = new_user_record.user_id
         return jsonify(new_user_record.to_json_dict())
 
     def user_login(self):
         request_data: Dict[str, str] = request.get_json()
         user_email: str = request_data.get('user_email')
         user_password: str = request_data.get('user_password')
-
         if list(filter(lambda x: not(x), [user_email, user_password])):
             return ServerUtils.http_response(
                 response_message='Missing required arguments.',
