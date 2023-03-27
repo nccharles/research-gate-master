@@ -1,7 +1,7 @@
 """
 Creates the flask app used project wide.
 """
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from flask import Flask
@@ -21,7 +21,6 @@ def create_app():
         os.path.join(BaseDirectoryConstants.DB_STORAGE_PATH, 'local_db.sqlite')
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
     db_provider.db.init_app(app)
     Migrate(app, db_provider.db)
     return app

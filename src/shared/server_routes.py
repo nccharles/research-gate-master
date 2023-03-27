@@ -3,7 +3,7 @@ Contains all endpoints in their respective classes, Theses are the endpoints
 used to interact with the application.
 """
 
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 

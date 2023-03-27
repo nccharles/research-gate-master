@@ -2,7 +2,7 @@
 Contains file management endpoints and corresponding methods.
 """
 
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from base_constants import BaseDirectoryConstants

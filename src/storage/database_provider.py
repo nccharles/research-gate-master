@@ -1,4 +1,4 @@
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from flask_sqlalchemy import SQLAlchemy

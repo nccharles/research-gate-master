@@ -1,7 +1,7 @@
 """
 Contains database migration manager.
 """
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from flask_migrate import stamp, migrate, upgrade

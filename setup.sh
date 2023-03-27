@@ -1,7 +1,7 @@
   
 #!/bin/bash
 
-# Author: Sylivie
+# Author: Sylvie
 # Copyright: Copyright 2023, AUCA Research Gate
 
 # Add current directory to the pythonpath variable. This will fix import errors on some systems.

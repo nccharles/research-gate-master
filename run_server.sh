@@ -1,7 +1,7 @@
   
 #!/bin/bash
 
-# Author: Sylivie
+# Author: Sylvie
 # Copyright: Copyright 2023, AUCA Research Gate
 
 # Default python is expected to be set to python3.7 or later.
