@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 # Create folders if not exists
 if [ ! -d "migrations" ]; then
-    mkdir -p migrations
+    alembic init migrations
 fi
 
 if [ ! -d "migrations/versions" ]; then
@@ -28,6 +28,5 @@ if [ ! -d "src/storage/db" ]; then
 fi
 
 # Create tables
-alembic init migrations
 alembic revision --autogenerate -m "Create tables"
 alembic upgrade head
