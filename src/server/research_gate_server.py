@@ -18,24 +18,14 @@ class ResearchGateServer:
         self.port: int = port
         self.intiate_servers()
 
-        # if not os.path.exists("migrations"):
-        #     subprocess.call("alembic init migrations", shell=True)
-        #     # raise PermissionError("Migrations directory must be mounted.")
-
-        # if not os.listdir('migrations'):
-        #     # Set FLASK_APP environment variable.
-        #     os.environ['FLASK_APP'] = os.path.abspath(__file__)
-        #     # Initialize migrations.
-        #     print("Initializing migrations...")
-        #     subprocess.call("flask db init", shell=True)
-
-        # DatabaseCreator.create_diagnostics_database_if_not_exists(flask_app=self.flask_app)
-        # MigrationManager.upgrade_database(app=self.flask_app)
+        if not os.path.exists("migrations"):
+            subprocess.call("alembic init migrations", shell=True)
+            # raise PermissionError("Migrations directory must be mounted.")
 
     def intiate_servers(self):
         UserManagement(flask_app=self.flask_app)
         DocumentManagement(flask_app=self.flask_app)
         FileServer(flask_app=self.flask_app)
 
-    def start(self, debug: bool = True):
+    def start(self, debug: bool = False):
         self.flask_app.run(host="0.0.0.0", debug=debug, port=self.port)

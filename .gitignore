@@ -1,7 +1,6 @@
 # Ignore the cache files
 __pycache__
 *.pyc
-*.ini
 .code
 .cache
 *.DS_Store
@@ -18,12 +17,10 @@ venv.bak/
 # DB files
 *.sqlite
 
-# Ignore db migrations
-migrations
-
 # vscode files
 .vscode
 
 # Ignore documents files except readme
 src/documents
 !src/documents/readme.md
+migrations/versions
