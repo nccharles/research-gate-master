@@ -2,7 +2,7 @@
 Contains user management endpoints and corresponding methods.
 """
 
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from storage.database_client import UserClient
@@ -69,8 +69,10 @@ class UserManagement:
         new_user_record: User = UserClient.create_and_store_new_user_record(
             user_first_name=user_first_name, user_middle_name=user_middle_name, user_last_name=user_last_name,
             user_email=user_email, user_password_hash=user_password_hash, user_phone_number=user_phone_number)
-        session['user_id'] = new_user_record.user_id
-        return jsonify(new_user_record.to_json_dict())
+        token: str = ServerUtils.generate_token(user_id=new_user_record.user_id)
+        # merge user record and token
+        obj = {**new_user_record.to_json_dict(), **{'user_token': token}}
+        return jsonify(obj) 
 
     def user_login(self):
         request_data: Dict[str, str] = request.get_json()
@@ -93,8 +95,10 @@ class UserManagement:
                 response_message='Password mismatch.',
                 response_status_code=status.HTTP_403_FORBIDDEN)
 
-        session['user_id'] = user_record.user_id
-        return jsonify(user_record.to_json_dict())
+        token: str = ServerUtils.generate_token(user_id=user_record.user_id)
+        # merge user record and token
+        obj = {**user_record.to_json_dict(), **{'user_token': token}}
+        return jsonify(obj)
 
     def user_logout(self):
         if 'user_id' in session:

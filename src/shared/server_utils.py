@@ -2,18 +2,20 @@
 Methods to be used frequently in the server.
 """
 
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from storage.database_client import DocumentClient
 from base_constants import BaseDirectoryConstants
-from flask import jsonify, session
+from flask import jsonify, session, request
 from flask_api import status
 from werkzeug.datastructures import FileStorage
 from shared.md5_hash import MD5Hash
 from shared.file_name_generator import FileNameGenerator
-from typing import Callable, Any, Dict
+from typing import Callable,Dict
 import os
+import jwt
+import time
 
 
 class ServerUtils:
@@ -27,13 +29,16 @@ class ServerUtils:
         Checks if user id is stored in the session.
         """
         def wrapper(self, *args, **kwargs):
-            if not session.get('user_id'):
+            # decode token
+            try:
+                payload = self.decode_token()
+                user_id = payload['user_id']
+                if user_id:
+                    return func(self, *args, **kwargs)
+            except jwt.ExpiredSignatureError:
                 return ServerUtils.http_response(
-                    response_message="Login is required.",
-                    response_status_code=status.HTTP_403_FORBIDDEN)
-
-            func_result: Any = func(self, *args, **kwargs)
-            return func_result
+                    response_message="Token expired. Please login again.",
+                    response_status_code=status.HTTP_401_UNAUTHORIZED)
         return wrapper
 
     @staticmethod
@@ -68,3 +73,32 @@ class ServerUtils:
             'document_base_name': random_base_name
         }
         return result_dict
+    def generate_token(user_id: str = None):
+        """
+        Generates a token for the user.
+        """
+        payload = {
+            'user_id': user_id
+        }
+        session["user_id"] = user_id
+        token = jwt.encode(payload, "dhj3_&^%$#jdksj", algorithm='HS256')
+        return token
+    def decode_token():
+        """
+        Decodes the token.
+        """
+        token = request.headers.get('Authorization').split(" ")[1]
+        payload = jwt.decode(token, "dhj3_&^%$#jdksj", algorithms=['HS256'])
+        return payload
+    # delete document file later than 12 hours in the folder
+    def delete_old_files_in_directory(directory_path: str = None, hours: int = None):
+        """
+        Deletes the document file.
+        """
+        current_time = time.time()
+        for filename in os.listdir(directory_path):
+            file_path = os.path.join(directory_path, filename)
+            if os.path.isfile(file_path):
+                file_creation_time = os.path.getctime(file_path)
+                if (current_time - file_creation_time) // 3600 >= hours:
+                    os.remove(file_path)

@@ -1,4 +1,0 @@
-# Author: Sylivie
-[flake8]
-exclude = ./src/web_client/node_modules/ ./migrations
-ignore = 293

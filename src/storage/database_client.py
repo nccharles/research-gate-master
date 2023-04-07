@@ -1,7 +1,7 @@
 """
 Contains functionality for storing and retrieving records from the database.
 """
-__author__ = "Sylivie"
+__author__ = "Sylvie"
 __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from storage.database_records import User, Document
