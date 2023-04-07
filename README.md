@@ -6,7 +6,6 @@ This is the repository of AUCA Research Gate project, it is a final year cs proj
 - create the virtual environment.
 - cd /path-to-research-gate/research-gate
 - execute ./setup.sh
-- run pip install -r requirements.txt
 - run server by executing ./run_server.sh
 
 ### TODOS:
