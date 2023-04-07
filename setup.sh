@@ -7,6 +7,8 @@ fi
 
 # Activate virtual environment
 source venv/bin/activate
+# Install requirements
+pip install -r requirements.txt
 
 # Create folders if not exists
 if [ ! -d "migrations" ]; then
