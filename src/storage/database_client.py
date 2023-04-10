@@ -95,7 +95,7 @@ class DocumentClient:
 
     @staticmethod
     def document_hash_exists(document_hash: str = None):
-        return db.session.query(Document).filter(Document.document_hash == document_hash).scalar() is not None
+        return True if db.session.query(Document).filter(Document.document_hash == document_hash).scalar() else False
       
     @staticmethod
     def document_base_name_is_taken(file_name: str = None):

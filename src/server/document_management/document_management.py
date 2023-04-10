@@ -110,37 +110,36 @@ class DocumentManagement:
             return ServerUtils.http_response(
                 response_message="Invalid faculty name: {0}.".format(document_faculty),
                 response_status_code=status.HTTP_400_BAD_REQUEST)
-        # ###############################################################################################
         # check document hash.
         document_hash: str = MD5Hash.compute_hash(file=document_file)
         if DocumentClient.document_hash_exists(document_hash=document_hash):
             return ServerUtils.http_response(
                 response_message="Document Already Exists in the system.",
                 response_status_code=status.HTTP_400_BAD_REQUEST)
+        else:
+            # get document base name.
+            all_documents: List[Document] = DocumentClient.retrieve_all_documents()
+            # compare document file and document base name.
+            parcentage: float =MD5Hash.compare_hash(file=document_file, all_documents=all_documents)
+            if parcentage >= 60:
+                return ServerUtils.http_response(
+                    response_message="Document has similar content {0}%, of document Already Exists in the system.".format(parcentage),
+                    response_status_code=status.HTTP_400_BAD_REQUEST)
+            else:
+                # Store the file in the file system.
+                document_storing_dict: Dict[str, str] = ServerUtils.store_document_file(file=document_file)
 
-        # get document base name.
-        all_documents: List[Document] = DocumentClient.retrieve_all_documents()
-        # compare document file and document base name.
-        parcentage: float =MD5Hash.compare_hash(file=document_file, all_documents=all_documents)
-        if parcentage >= 60:
-            return ServerUtils.http_response(
-                response_message="Document has similar content {0}%, of document Already Exists in the system.".format(parcentage),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
+                new_document: Document = DocumentClient.create_and_store_new_document_record(
+                    document_original_base_name=document_storing_dict['document_original_base_name'],
+                    document_base_name=document_storing_dict['document_base_name'],
+                    document_hash=document_storing_dict['document_hash'],
+                    document_type=document_type, document_college=document_college,
+                    document_school=document_school, document_faculty=document_faculty,
+                    document_description=document_description,
+                    document_uploader_id=self.decode_token()['user_id'],
+                    document_title=document_title)
 
-        # Store the file in the file system.
-        document_storing_dict: Dict[str, str] = ServerUtils.store_document_file(file=document_file)
-
-        new_document: Document = DocumentClient.create_and_store_new_document_record(
-            document_original_base_name=document_storing_dict['document_original_base_name'],
-            document_base_name=document_storing_dict['document_base_name'],
-            document_hash=document_storing_dict['document_hash'],
-            document_type=document_type, document_college=document_college,
-            document_school=document_school, document_faculty=document_faculty,
-            document_description=document_description,
-            document_uploader_id=self.decode_token()['user_id'],
-            document_title=document_title)
-
-        return jsonify(new_document.to_json_dict())
+                return jsonify(new_document.to_json_dict())
 
     @ServerUtils.login_required
     def update_document(self):
