@@ -22,7 +22,6 @@ class DatabaseCreator:
         """
         if not database_exists(flask_app.config['SQLALCHEMY_DATABASE_URI']):
             create_database(flask_app.config['SQLALCHEMY_DATABASE_URI'])
-        print(flask_app.config['SQLALCHEMY_DATABASE_URI'])
 
 
 class DatabaseStorageClient:
@@ -95,7 +94,7 @@ class DocumentClient:
 
     @staticmethod
     def document_hash_exists(document_hash: str = None):
-        return True if db.session.query(Document).filter(Document.document_hash == document_hash).scalar() else False
+        return db.session.query(Document).filter(Document.document_hash == document_hash).scalar() is not None
       
     @staticmethod
     def document_base_name_is_taken(file_name: str = None):
