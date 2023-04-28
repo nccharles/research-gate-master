@@ -10,7 +10,7 @@ from storage.database_records import Document, User
 from shared.server_routes import ServerRoutes
 from shared.server_utils import ServerUtils
 from shared.md5_hash import MD5Hash
-from shared.enum_types import DocumentType, Colleges, Schools, Faculties
+from shared.enum_types import DocumentType, Schools, Faculties
 from flask_api import status
 from flask import Flask, request,jsonify
 from typing import Dict, List
@@ -39,12 +39,6 @@ class DocumentManagement:
             ServerRoutes.DocumentManagementRoutes.RETRIEVE_ALL_DOCUMENTS,
             endpoint="retrieve_all_documents",
             view_func=self.retrieve_all_documents,
-            methods=['GET'])
-
-        self.flask_app.add_url_rule(
-            ServerRoutes.DocumentManagementRoutes.RETRIEVE_COLLEGE_DOCUMENTS + '/<college_name>',
-            endpoint="retrieve_college_documents",
-            view_func=self.retrieve_college_documents,
             methods=['GET'])
 
         self.flask_app.add_url_rule(
@@ -81,13 +75,11 @@ class DocumentManagement:
         document_file = request.files.get('file')
         document_description: str = request_data.get('document_description')
         document_type: str = request_data.get('document_type')
-        document_college: str = request_data.get('document_college')
-        document_school: str = request_data.get('document_school')
+        document_campus: str = request_data.get('document_campus')
         document_faculty: str = request_data.get('document_faculty')
         document_title: str = request_data.get('document_title')
         if list(filter(lambda x: not(x),
-                       [document_file, document_description, document_type,
-                        document_college, document_school, document_faculty, document_title])):
+                       [document_file, document_description, document_type, document_campus, document_faculty, document_title])):
             return ServerUtils.http_response(
                 response_message='Missing required arguments.',
                 response_status_code=status.HTTP_400_BAD_REQUEST)
@@ -96,14 +88,9 @@ class DocumentManagement:
                 response_message="Invalid document type name: {0}.".format(document_type),
                 response_status_code=status.HTTP_400_BAD_REQUEST)
 
-        if not ServerUtils.check_enum_has_key(Colleges, document_college):
+        if not ServerUtils.check_enum_has_key(Schools, document_campus):
             return ServerUtils.http_response(
-                response_message="Invalid college name: {0}.".format(document_college),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
-
-        if not ServerUtils.check_enum_has_key(Schools, document_school):
-            return ServerUtils.http_response(
-                response_message="Invalid school name: {0}.".format(document_school),
+                response_message="Invalid school name: {0}.".format(document_campus),
                 response_status_code=status.HTTP_400_BAD_REQUEST)
 
         if not ServerUtils.check_enum_has_key(Faculties, document_faculty):
@@ -133,8 +120,8 @@ class DocumentManagement:
                     document_original_base_name=document_storing_dict['document_original_base_name'],
                     document_base_name=document_storing_dict['document_base_name'],
                     document_hash=document_storing_dict['document_hash'],
-                    document_type=document_type, document_college=document_college,
-                    document_school=document_school, document_faculty=document_faculty,
+                    document_type=document_type,
+                    document_campus=document_campus, document_faculty=document_faculty,
                     document_description=document_description,
                     document_uploader_id=self.decode_token()['user_id'],
                     document_title=document_title)
@@ -148,13 +135,11 @@ class DocumentManagement:
         document_title: str = request_data.get('document_title')
         document_description: str = request_data.get('document_description')
         document_type: str = request_data.get('document_type')
-        document_college: str = request_data.get('document_college')
-        document_school: str = request_data.get('document_school')
+        document_campus: str = request_data.get('document_campus')
         document_faculty: str = request_data.get('document_faculty')
 
         if list(filter(lambda x: not(x),
-                       [document_id, document_description, document_type,
-                        document_college, document_school, document_faculty, document_title])):
+                       [document_id, document_description, document_type,document_campus, document_faculty, document_title])):
             return ServerUtils.http_response(
                 response_message='Missing required arguments.',
                 response_status_code=status.HTTP_400_BAD_REQUEST)
@@ -168,8 +153,7 @@ class DocumentManagement:
                 response_status_code=status.HTTP_403_FORBIDDEN)
 
         updated_document_record: Document = DocumentClient.update_document_record(
-            document_type=document_type, document_college=document_college,
-            document_school=document_school, document_faculty=document_faculty,
+            document_campus=document_campus, document_faculty=document_faculty,
             document_description=document_description, document_id=document_id,
             document_title=document_title)
         return jsonify(updated_document_record.to_json_dict())
@@ -180,17 +164,6 @@ class DocumentManagement:
         return jsonify([document.to_json_dict() for document in all_documents])
 
     @ServerUtils.login_required
-    def retrieve_college_documents(self, college_name):
-        if not ServerUtils.check_enum_has_key(Colleges, college_name):
-            return ServerUtils.http_response(
-                response_message="Invalid college name: {0}.".format(college_name),
-                response_status_code=status.HTTP_400_BAD_REQUEST)
-
-        college_documents: List[Document] = DocumentClient.retrieve_college_documents(
-            document_college=college_name)
-        return jsonify([college_document.to_json_dict() for college_document in college_documents])
-
-    @ServerUtils.login_required
     def retrieve_school_documents(self, school_name):
         if not ServerUtils.check_enum_has_key(Schools, school_name):
             return ServerUtils.http_response(
@@ -198,7 +171,7 @@ class DocumentManagement:
                 response_status_code=status.HTTP_400_BAD_REQUEST)
 
         school_documents: List[Document] = DocumentClient.retrieve_school_documents(
-            document_school=school_name)
+            document_campus=school_name)
         return jsonify([school_document.to_json_dict() for school_document in school_documents])
 
     @ServerUtils.login_required

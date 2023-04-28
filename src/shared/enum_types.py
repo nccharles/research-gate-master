@@ -11,27 +11,21 @@ class DocumentType(Enum):
     CAT = 1
     EXAM = 2
     ASSIGNMENT = 3
-    RESEARCH = 4
-
-
-@unique
-class Colleges(Enum):
-    UNKNOWN = 0
-    COLLEGE_OF_SCIENCE_AND_TECHNOLOGY = 1
-    COLLEGE_OF_BANKING_AND_ECONOMICS = 2
+    FINAL_YEAR_RESEARCH = 4
 
 
 @unique
 class Schools(Enum):
     UNKNOWN = 0
-    SCHOOL_OF_ICT = 1
-    SCHOOL_OF_ENGINEERING = 2
+    GISHUSHU = 1
+    MASORO = 2
+    KIBUYE = 3
+
 
 
 @unique
 class Faculties(Enum):
     UNKNOWN = 0
-    COMPUTER_SCIENCE = 1
-    COMPUTER_ENGINEERING = 2
-
-    CIVIL_ENGINEERING = 3
+    IT = 1
+    BUSINESS = 2
+    MEDECINE = 3

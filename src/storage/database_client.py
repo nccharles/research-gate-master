@@ -8,7 +8,7 @@ from storage.database_records import User, Document
 from storage.database_provider import db_provider
 from werkzeug.security import check_password_hash
 from sqlalchemy_utils import database_exists, create_database
-from shared.enum_types import DocumentType, Colleges, Schools, Faculties
+from shared.enum_types import DocumentType, Schools, Faculties
 from flask import Flask
 
 db = db_provider.db
@@ -80,14 +80,14 @@ class DocumentClient:
     @staticmethod
     def create_and_store_new_document_record(
             document_original_base_name: str = None, document_base_name: str = None, document_hash: str = None,
-            document_type: DocumentType = None, document_college: Colleges = None, document_school: Schools = None,
+            document_type: DocumentType = None, document_campus: Schools = None,
             document_faculty: Faculties = None, document_description: str = None, document_uploader_id: int = None,
             document_title: str = None):
 
         new_document_record: Document = Document(
             document_original_base_name=document_original_base_name, document_base_name=document_base_name,
-            document_hash=document_hash, document_type=document_type, document_college=document_college,
-            document_school=document_school, document_faculty=document_faculty, document_description=document_description,
+            document_hash=document_hash, document_type=document_type,
+            document_campus=document_campus, document_faculty=document_faculty, document_description=document_description,
             document_uploader_id=document_uploader_id, document_title=document_title)
         DatabaseStorageClient.store_and_refresh_new_record(record=new_document_record)
         return new_document_record
@@ -104,7 +104,7 @@ class DocumentClient:
 
     @staticmethod
     def update_document_record(
-            document_type: DocumentType = None, document_college: Colleges = None, document_school: Schools = None,
+            document_type: DocumentType = None, document_campus: Schools = None,
             document_faculty: Faculties = None, document_description: str = None, document_id: int = None,
             document_title: str = None):
 
@@ -112,8 +112,7 @@ class DocumentClient:
         if document_record:
             document_record.document_title = document_title
             document_record.document_type = document_type
-            document_record.document_college = document_college
-            document_record.document_school = document_school
+            document_record.document_campus = document_campus
             document_record.document_faculty = document_faculty
             document_record.document_description = document_description
 
@@ -134,14 +133,9 @@ class DocumentClient:
         return db.session.query(Document).filter(Document.document_uuid == document_uuid).one_or_none()
 
     @staticmethod
-    def retrieve_college_documents(document_college: Colleges = None):
+    def retrieve_school_documents(document_campus: Schools = None):
         return db.session.query(Document).filter(
-            Document.document_college == document_college).all()
-
-    @staticmethod
-    def retrieve_school_documents(document_school: Schools = None):
-        return db.session.query(Document).filter(
-            Document.document_school == document_school).all()
+            Document.document_campus == document_campus).all()
 
     @staticmethod
     def retrieve_faculty_documents(document_faculty: Faculties = None):

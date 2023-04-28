@@ -6,7 +6,7 @@ __copyright__ = "Copyright 2023, AUCA Research Gate"
 
 from storage.database_provider import db_provider
 from storage.database_constants import DatabaseConstants
-from shared.enum_types import DocumentType, Colleges, Schools, Faculties
+from shared.enum_types import DocumentType, Schools, Faculties
 import datetime
 import uuid
 from flask_sqlalchemy import SQLAlchemy
@@ -80,8 +80,7 @@ class Document(db.Model):
     document_hash = db.Column(db.String(DatabaseConstants.GeneralConstants.DOCUMENT_HASH), nullable=False, unique=True)
     document_title = db.Column(db.Text(), nullable=False)
     document_type = db.Column(db.Enum(DocumentType), nullable=False, default=DocumentType.UNKNOWN)
-    document_college = db.Column(db.Enum(Colleges), nullable=False, default=Colleges.UNKNOWN)
-    document_school = db.Column(db.Enum(Schools), nullable=False, default=Schools.UNKNOWN)
+    document_campus = db.Column(db.Enum(Schools), nullable=False, default=Schools.UNKNOWN)
     document_faculty = db.Column(db.Enum(Faculties), nullable=False, default=Faculties.UNKNOWN)
     document_description = db.Column(db.Text(), nullable=False)
 
@@ -93,7 +92,7 @@ class Document(db.Model):
 
     def __init__(
             self, document_original_base_name: str = None, document_base_name: str = None, document_hash: str = None,
-            document_type: DocumentType = None, document_college: Colleges = None, document_school: Schools = None,
+            document_type: DocumentType = None, document_campus: Schools = None,
             document_faculty: Faculties = None, document_description: str = None, document_uploader_id: int = None,
             document_title: str = None):
 
@@ -103,8 +102,7 @@ class Document(db.Model):
         self.document_hash = document_hash
         self.document_title = document_title
         self.document_type = document_type
-        self.document_college = document_college
-        self.document_school = document_school
+        self.document_campus = document_campus
         self.document_faculty = document_faculty
         self.document_description = document_description
         self.document_uploader_id = document_uploader_id
@@ -121,8 +119,7 @@ class Document(db.Model):
             "document_hash": self.document_hash,
             "document_title": self.document_title,
             "document_type": self.document_type.name,
-            "document_college": self.document_college.name,
-            "document_school": self.document_school.name,
+            "document_campus": self.document_campus.name,
             "document_faculty": self.document_faculty.name,
             "document_description": self.document_description,
             "document_uploader": self.document_uploader.to_json_dict(),

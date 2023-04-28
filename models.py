@@ -1,5 +1,6 @@
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean, Enum, Text
+from src.shared.enum_types import DocumentType, Schools, Faculties
 
 
 Base = declarative_base()
@@ -23,10 +24,9 @@ class DocumentModel(Base):
     document_original_base_name = Column(String(255), nullable=False)
     document_base_name = Column(String(255), nullable=False)
     document_hash = Column(String(255), nullable=False)
-    document_type = Column(Enum('PAPER', 'BOOK', 'REPORT', 'THESIS', 'JOURNAL', 'OTHER'), nullable=False)
-    document_college = Column(Enum('ENGINEERING', 'MEDICINE', 'ARTS', 'EDUCATION', 'AGRICULTURE', 'BUSINESS', 'OTHER'), nullable=False)
-    document_school = Column(Enum('ENGINEERING', 'MEDICINE', 'ARTS', 'EDUCATION', 'AGRICULTURE', 'BUSINESS', 'OTHER'), nullable=False)
-    document_faculty = Column(Enum('ENGINEERING', 'MEDICINE', 'ARTS', 'EDUCATION', 'AGRICULTURE', 'BUSINESS', 'OTHER'), nullable=False)
+    document_type = Column(Enum(DocumentType), nullable=False)
+    document_campus = Column(Enum(Schools), nullable=False)
+    document_faculty = Column(Enum(Faculties), nullable=False)
     document_description = Column(Text, nullable=False)
     document_uploader_id = Column(Integer, ForeignKey('user.user_id'), nullable=False)
     document_uploader = relationship('User', backref='user_documents')
