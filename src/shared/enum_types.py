@@ -7,25 +7,25 @@ from enum import Enum, unique
 
 @unique
 class DocumentType(Enum):
-    UNKNOWN = 0
-    CAT = 1
-    EXAM = 2
-    ASSIGNMENT = 3
-    FINAL_YEAR_RESEARCH = 4
+    UNKNOWN = "Unknown"
+    CAT = "Cat"
+    EXAM = "Exam"
+    ASSIGNMENT = "Assignment"
+    FINAL_YEAR_RESEARCH = "Final Year Research"
 
 
 @unique
 class Schools(Enum):
-    UNKNOWN = 0
-    GISHUSHU = 1
-    MASORO = 2
-    KIBUYE = 3
+    UNKNOWN = "Unknown"
+    GISHUSHU = "Gishushu"
+    MASORO = "Masoro"
+    KIBUYE = "Kibuye"
 
 
 
 @unique
 class Faculties(Enum):
-    UNKNOWN = 0
-    IT = 1
-    BUSINESS = 2
-    MEDECINE = 3
+    UNKNOWN = "Unknown"
+    IT = "IT"
+    BUSINESS = "Business"
+    MEDECINE = "Medecine"

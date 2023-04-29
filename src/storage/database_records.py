@@ -118,9 +118,9 @@ class Document(db.Model):
             "document_base_name": self.document_base_name,
             "document_hash": self.document_hash,
             "document_title": self.document_title,
-            "document_type": self.document_type.name,
-            "document_campus": self.document_campus.name,
-            "document_faculty": self.document_faculty.name,
+            "document_type": self.document_type.value,
+            "document_campus": self.document_campus.value,
+            "document_faculty": self.document_faculty.value,
             "document_description": self.document_description,
             "document_uploader": self.document_uploader.to_json_dict(),
             "document_creation_timestamp": self.document_creation_timestamp
