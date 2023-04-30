@@ -21,6 +21,7 @@ fi
 
 if [ ! -d "src/documents" ]; then
     mkdir -p src/documents
+    mkdir -p src/documents/temp
 fi
 
 if [ ! -d "src/storage/db" ]; then

@@ -25,5 +25,5 @@ class ResearchGateServer:
         DocumentManagement(flask_app=self.flask_app)
         FileServer(flask_app=self.flask_app)
 
-    def start(self, debug: bool = False):
+    def start(self, debug: bool = True):
         self.flask_app.run(host="0.0.0.0", debug=debug, port=self.port)
