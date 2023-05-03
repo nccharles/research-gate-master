@@ -19,8 +19,7 @@ if [ ! -d "migrations/versions" ]; then
     mkdir -p migrations/versions
 fi
 
-if [ ! -d "src/documents" ]; then
-    mkdir -p src/documents
+if [ ! -d "src/documents/temp" ]; then
     mkdir -p src/documents/temp
 fi
 
