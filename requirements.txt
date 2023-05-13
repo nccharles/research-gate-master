@@ -6,6 +6,7 @@ Flask_Migrate
 flask_sqlalchemy
 nltk
 PyJWT
+PyPDF2
 scikit_learn
 SQLAlchemy
 SQLAlchemy_Utils

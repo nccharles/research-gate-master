@@ -22,6 +22,3 @@ class ServerRoutes:
         RETRIEVE_FACULTY_DOCUMENTS = "/retrieve/faculty/documents"
         RETRIEVE_DOCUMENTS_BY_DOCUMENT_TYPE = "/retrieve/documents/by/document/type"
         RETRIEVE_UPLOADER_DOCUMENTS = "/retrieve/uploader/documents"
-
-    class FileServerRoutes:
-        UPLOADED_FILES_ROOT = "/files/uploaded"
