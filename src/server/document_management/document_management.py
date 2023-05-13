@@ -108,11 +108,14 @@ class DocumentManagement:
             all_documents: List[Document] = DocumentClient.retrieve_all_documents()
             # compare document file and document base name.
             parcentage: float =MD5Hash.compare_hash(file=document_file, all_documents=all_documents)
-            print(parcentage)
             if parcentage >= 60:
                 return ServerUtils.http_response(
                     response_message="Document has similar content {0}%, of document Already Exists in the system.".format(parcentage),
                     response_status_code=status.HTTP_400_BAD_REQUEST)
+            elif parcentage==-1:
+                return ServerUtils.http_response(
+                    response_message="Error in comparing document.",
+                    response_status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 # Store the file in the file system.
                 document_storing_dict: Dict[str, str] = ServerUtils.store_document_file(file=document_file)
